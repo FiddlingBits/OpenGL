@@ -1,0 +1,10 @@
+#version 460 core
+
+in vec2 vo_textureCoordinates;
+out vec4 FragColor;
+uniform sampler2D fu_texture;
+
+void main()
+{
+	FragColor = texture(fu_texture, vo_textureCoordinates);
+}

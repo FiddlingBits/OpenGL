@@ -1,0 +1,12 @@
+#version 460 core
+
+in vec3 vi_position;
+in vec2 vi_textureCoordinates;
+out vec2 vo_textureCoordinates;
+uniform mat4 vu_transform;
+
+void main()
+{
+	gl_Position = vu_transform * vec4(vi_position, 1.0);
+	vo_textureCoordinates = vec2(vi_textureCoordinates);
+}

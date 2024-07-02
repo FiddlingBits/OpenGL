@@ -2,7 +2,7 @@
  * Include
  ****************************************************************************************************/
 
-#include "Demonstration/Texture/Texture.h"
+#include "Demonstration/Transformation/Transformation.h"
 #include "Library/stb/stb_image.h" // Must Be Included Here
 
 /****************************************************************************************************
@@ -10,16 +10,16 @@
  ****************************************************************************************************/
 
 /*** Constructor ***/
-Texture::Texture()
+Transformation::Transformation()
     : Application(), ebo {}, shaderProgram {}, texture {}, vao {}, vbo {}
 {
 }
 
 /*** Method ***/
-void Texture::SetUp(void)
+void Transformation::SetUp(void)
 {
     /*** Shader Program ***/
-    shaderProgram.CreateProgram("Demonstration\\Texture\\FragmentShader.txt", "Demonstration\\Texture\\VertexShader.txt");
+    shaderProgram.CreateProgram("Demonstration\\Transformation\\FragmentShader.txt", "Demonstration\\Transformation\\VertexShader.txt");
     shaderProgram.Use();
 
     /*** Rectangle ***/
@@ -71,7 +71,7 @@ void Texture::SetUp(void)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     int width, height, nrChannels;
-    stbi_uc* data {stbi_load("Demonstration\\Texture\\Texture.png", &width, &height, &nrChannels, STBI_rgb)};
+    stbi_uc* data {stbi_load("Demonstration\\Transformation\\Texture.png", &width, &height, &nrChannels, STBI_rgb)};
     if(data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -85,7 +85,7 @@ void Texture::SetUp(void)
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-void Texture::TearDown(void)
+void Transformation::TearDown(void)
 {
     /*** Clean Up ***/
     glDeleteBuffers(1, &ebo);
@@ -96,11 +96,14 @@ void Texture::TearDown(void)
     glfwTerminate();
 }
 
-void Texture::Update(void)
+void Transformation::Update(void)
 {
     /*** Update ***/
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+    glm::mat4 transform(1.0);
+    transform = glm::rotate(transform, static_cast<float>(GetTime()), glm::vec3(0.0, 0.0, 1.0));
+    glUniformMatrix4fv(shaderProgram.GetUniformLocation("vu_transform"), 1, GL_FALSE, glm::value_ptr(transform));
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

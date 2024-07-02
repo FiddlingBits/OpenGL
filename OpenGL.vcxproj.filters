@@ -33,12 +33,17 @@
     <ClCompile Include="Demonstration\Texture\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Demonstration\Transformation\Transformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Demonstration\Basic\VertexShader.txt" />
     <Text Include="Demonstration\Basic\FragmentShader.txt" />
     <Text Include="Demonstration\Texture\FragmentShader.txt" />
     <Text Include="Demonstration\Texture\VertexShader.txt" />
+    <Text Include="Demonstration\Transformation\FragmentShader.txt" />
+    <Text Include="Demonstration\Transformation\VertexShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ShaderProgram.h">
@@ -51,6 +56,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Demonstration\Texture\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Demonstration\Transformation\Transformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

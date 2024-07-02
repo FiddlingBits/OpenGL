@@ -46,6 +46,11 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Library\glad\include\;$(SolutionDir)Library\glfw\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -60,6 +65,7 @@
     <ClCompile Include="Demonstration\Basic\Basic.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Demonstration\Texture\Texture.cpp" />
+    <ClCompile Include="Demonstration\Transformation\Transformation.cpp" />
     <ClCompile Include="Library\glad\src\glad.c" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Main\Main.cpp" />
@@ -69,12 +75,15 @@
     <Text Include="Demonstration\Basic\VertexShader.txt" />
     <Text Include="Demonstration\Texture\FragmentShader.txt" />
     <Text Include="Demonstration\Texture\VertexShader.txt" />
+    <Text Include="Demonstration\Transformation\FragmentShader.txt" />
+    <Text Include="Demonstration\Transformation\VertexShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Demonstration\Basic\Basic.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Demonstration\Texture\Texture.h" />
+    <ClInclude Include="Demonstration\Transformation\Transformation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
