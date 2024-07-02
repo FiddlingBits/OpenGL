@@ -33,7 +33,10 @@
     <ClCompile Include="Demonstration\Texture\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Demonstration\Transformation\Transformation.cpp">
+    <ClCompile Include="Demonstration\Transform\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Demonstration\Depth\Depth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,8 +45,10 @@
     <Text Include="Demonstration\Basic\FragmentShader.txt" />
     <Text Include="Demonstration\Texture\FragmentShader.txt" />
     <Text Include="Demonstration\Texture\VertexShader.txt" />
-    <Text Include="Demonstration\Transformation\FragmentShader.txt" />
-    <Text Include="Demonstration\Transformation\VertexShader.txt" />
+    <Text Include="Demonstration\Transform\FragmentShader.txt" />
+    <Text Include="Demonstration\Transform\VertexShader.txt" />
+    <Text Include="Demonstration\Depth\VertexShader.txt" />
+    <Text Include="Demonstration\Depth\FragmentShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ShaderProgram.h">
@@ -58,7 +63,10 @@
     <ClInclude Include="Demonstration\Texture\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Demonstration\Transformation\Transformation.h">
+    <ClInclude Include="Demonstration\Transform\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Demonstration\Depth\Depth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

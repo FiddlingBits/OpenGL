@@ -30,10 +30,10 @@ void Texture::SetUp(void)
         1.0, 0.0, // Texture Coordinate: Bottom Right
         0.0, 0.0, // Texture Coordinate: Bottom Left
         0.0, 1.0, // Texture Coordinate: Top Left
-        0.5f, 0.5f, 0.0f,   // Vertex: Top Right
-        0.5f, -0.5f, 0.0f,  // Vertex: Bottom Right
-        -0.5f, -0.5f, 0.0f, // Vertex: Bottom Left
-        -0.5f, 0.5f, 0.0f   // Vertex: Top Left
+        0.5, 0.5, 0.0,   // Vertex: Top Right
+        0.5, -0.5, 0.0,  // Vertex: Bottom Right
+        -0.5, -0.5, 0.0, // Vertex: Bottom Left
+        -0.5, 0.5, 0.0   // Vertex: Top Left
     };
 
     /* Vertex Array Object */
@@ -99,7 +99,7 @@ void Texture::TearDown(void)
 void Texture::Update(void)
 {
     /*** Update ***/
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

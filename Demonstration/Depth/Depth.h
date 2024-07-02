@@ -8,40 +8,36 @@
  * Include
  ****************************************************************************************************/
 
+#include <cmath>
+#include "Core/Application.h"
+#include "Core/ShaderProgram.h"
 #include <format>
-#include <fstream>
-#include "glad/glad.h"
+#include "glad/glad.h" // Must Be Included Before glfw3.h
+#include "GLFW/glfw3.h"
 #include "Library/glm/glm/glm.hpp"
+#include "Library/glm/glm/gtc/matrix_transform.hpp"
 #include "Library/glm/glm/gtc/type_ptr.hpp"
-#include <iostream>
-#include <sstream>
-#include <string>
 
 /****************************************************************************************************
  * Class
  ****************************************************************************************************/
 
-class ShaderProgram
+class Depth : public Application
 {
     private:
-        /*** Method ***/
-        GLuint CompileShader(const std::string FileName, const GLenum Type) const;
-        std::string ReadFile(const std::string FileName) const;
-
         /*** Variable ***/
-        GLuint programId;
+        GLuint ebo;
+        ShaderProgram shaderProgram;
+        GLuint texture;
+        GLuint vao;
+        GLuint vbo;
 
     public:
         /*** Constructor ***/
-        ShaderProgram();
-
-        /*** Destructor ***/
-        ~ShaderProgram();
+        Depth();
 
         /*** Method ***/
-        void CreateProgram(const std::string FragmentShaderFileName, const std::string VertexShaderFileName);
-        GLint GetAttributeLocation(const std::string Name) const;
-        void SetMat4(const std::string& Name, const glm::mat4& Mat4) const;
-        void SetVec3(const std::string& name, const float X, const float Y, const float Z) const;
-        void Use() const;
+        void SetUp(void) override;
+        void TearDown(void) override;
+        void Update(void) override;
 };

@@ -25,10 +25,10 @@ void Basic::SetUp(void)
     /* Vertices */
     float vertices[] =
     {
-        0.5f, 0.5f, 0.0f,   // Top Right
-        0.5f, -0.5f, 0.0f,  // Bottom Right
-        -0.5f, -0.5f, 0.0f, // Bottom Left
-        -0.5f, 0.5f, 0.0f   // Top Left
+        0.5, 0.5, 0.0,   // Top Right
+        0.5, -0.5, 0.0,  // Bottom Right
+        -0.5, -0.5, 0.0, // Bottom Left
+        -0.5, 0.5, 0.0   // Top Left
     };
 
     /* Vertex Array Object */
@@ -70,11 +70,11 @@ void Basic::TearDown(void)
 void Basic::Update(void)
 {
     /*** Update ***/
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     glBindVertexArray(vao);
     float red = static_cast<float>((sin(GetTime()) / 2.0) + 0.5);
-    glUniform3f(shaderProgram.GetUniformLocation("fu_color"), red, 0.0, 0.0);
+    shaderProgram.SetVec3("fu_color", red, 0.0, 0.0);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
  

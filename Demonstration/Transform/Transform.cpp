@@ -2,7 +2,7 @@
  * Include
  ****************************************************************************************************/
 
-#include "Demonstration/Transformation/Transformation.h"
+#include "Demonstration/Transform/Transform.h"
 #include "Library/stb/stb_image.h" // Must Be Included Here
 
 /****************************************************************************************************
@@ -10,16 +10,16 @@
  ****************************************************************************************************/
 
 /*** Constructor ***/
-Transformation::Transformation()
+Transform::Transform()
     : Application(), ebo {}, shaderProgram {}, texture {}, vao {}, vbo {}
 {
 }
 
 /*** Method ***/
-void Transformation::SetUp(void)
+void Transform::SetUp(void)
 {
     /*** Shader Program ***/
-    shaderProgram.CreateProgram("Demonstration\\Transformation\\FragmentShader.txt", "Demonstration\\Transformation\\VertexShader.txt");
+    shaderProgram.CreateProgram("Demonstration\\Transform\\FragmentShader.txt", "Demonstration\\Transform\\VertexShader.txt");
     shaderProgram.Use();
 
     /*** Rectangle ***/
@@ -30,10 +30,10 @@ void Transformation::SetUp(void)
         1.0, 0.0, // Texture Coordinate: Bottom Right
         0.0, 0.0, // Texture Coordinate: Bottom Left
         0.0, 1.0, // Texture Coordinate: Top Left
-        0.5f, 0.5f, 0.0f,   // Vertex: Top Right
-        0.5f, -0.5f, 0.0f,  // Vertex: Bottom Right
-        -0.5f, -0.5f, 0.0f, // Vertex: Bottom Left
-        -0.5f, 0.5f, 0.0f   // Vertex: Top Left
+        0.5, 0.5, 0.0,   // Vertex: Top Right
+        0.5, -0.5, 0.0,  // Vertex: Bottom Right
+        -0.5, -0.5, 0.0, // Vertex: Bottom Left
+        -0.5, 0.5, 0.0   // Vertex: Top Left
     };
 
     /* Vertex Array Object */
@@ -71,7 +71,7 @@ void Transformation::SetUp(void)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     int width, height, nrChannels;
-    stbi_uc* data {stbi_load("Demonstration\\Transformation\\Texture.png", &width, &height, &nrChannels, STBI_rgb)};
+    stbi_uc* data {stbi_load("Demonstration\\Transform\\Texture.png", &width, &height, &nrChannels, STBI_rgb)};
     if(data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -85,7 +85,7 @@ void Transformation::SetUp(void)
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-void Transformation::TearDown(void)
+void Transform::TearDown(void)
 {
     /*** Clean Up ***/
     glDeleteBuffers(1, &ebo);
@@ -96,14 +96,14 @@ void Transformation::TearDown(void)
     glfwTerminate();
 }
 
-void Transformation::Update(void)
+void Transform::Update(void)
 {
     /*** Update ***/
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     glm::mat4 transform(1.0);
     transform = glm::rotate(transform, static_cast<float>(GetTime()), glm::vec3(0.0, 0.0, 1.0));
-    glUniformMatrix4fv(shaderProgram.GetUniformLocation("vu_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+    shaderProgram.SetMat4("vu_transform", transform);
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

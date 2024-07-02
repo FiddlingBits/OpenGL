@@ -24,6 +24,9 @@ class Application
         /*** Variable ***/
         double elapsedTime;
         double time;
+
+    protected:
+        /*** Variable ***/
         GLFWwindow* window;
 
     public:

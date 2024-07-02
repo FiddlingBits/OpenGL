@@ -22,7 +22,7 @@
  * Class
  ****************************************************************************************************/
 
-class Transformation : public Application
+class Transform : public Application
 {
     private:
         /*** Variable ***/
@@ -34,7 +34,7 @@ class Transformation : public Application
 
     public:
         /*** Constructor ***/
-        Transformation();
+        Transform();
 
         /*** Method ***/
         void SetUp(void) override;
