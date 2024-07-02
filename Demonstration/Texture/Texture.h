@@ -8,33 +8,33 @@
  * Include
  ****************************************************************************************************/
 
+#include <cmath>
+#include "Core/Application.h"
+#include "Core/ShaderProgram.h"
 #include <format>
 #include "glad/glad.h" // Must Be Included Before glfw3.h
 #include "GLFW/glfw3.h"
-#include <iostream>
-#include <string>
 
 /****************************************************************************************************
  * Class
  ****************************************************************************************************/
 
-class Application
+class Texture : public Application
 {
     private:
         /*** Variable ***/
-        double elapsedTime;
-        double time;
-        GLFWwindow* window;
+        GLuint ebo;
+        ShaderProgram shaderProgram;
+        GLuint texture;
+        GLuint vao;
+        GLuint vbo;
 
     public:
         /*** Constructor ***/
-        Application();
+        Texture();
 
         /*** Method ***/
-        double GetElapsedTime() const;
-        double GetTime() const;
-        void Run(const std::string Title, const int Width, const int Height);
-        virtual void SetUp(void);
-        virtual void TearDown(void);
-        virtual void Update(void);
+        void SetUp(void) override;
+        void TearDown(void) override;
+        void Update(void) override;
 };

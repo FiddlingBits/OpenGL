@@ -11,8 +11,8 @@
 #include <cmath>
 #include "Core/Application.h"
 #include "Core/ShaderProgram.h"
-#include <glad/glad.h> // Must Be Included Before glfw3.h
-#include <GLFW/glfw3.h>
+#include "glad/glad.h" // Must Be Included Before glfw3.h
+#include "GLFW/glfw3.h"
 
 /****************************************************************************************************
  * Class
