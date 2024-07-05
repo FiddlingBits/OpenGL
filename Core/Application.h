@@ -36,6 +36,10 @@ class Application
         /*** Method ***/
         double GetElapsedTime() const;
         double GetTime() const;
+        virtual void HandleKeyPress(const int Key, const int ScanCode, const int Action, const int Mods);
+        virtual void HandleMouseButton(const int Button, const int Action, const int Mods);
+        virtual void HandleMouseCursorPosition(const double X, const double Y);
+        virtual void HandleMouseScroll(const double XOffset, const double YOffset);
         void Run(const std::string Title, const int Width, const int Height);
         virtual void SetUp(void);
         virtual void TearDown(void);

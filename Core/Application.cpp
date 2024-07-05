@@ -13,10 +13,28 @@ static void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-static void ProcessInput(GLFWwindow* window)
+static void KeyPressCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+    Application* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    application->HandleKeyPress(key, scancode, action, mods);
+}
+
+static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    Application* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    application->HandleMouseButton(button, action, mods);
+}
+
+static void MouseCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    Application* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    application->HandleMouseCursorPosition(xpos, ypos);
+}
+
+static void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    Application* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    application->HandleMouseScroll(xoffset, yoffset);
 }
 
 /****************************************************************************************************
@@ -40,6 +58,22 @@ double Application::GetTime() const
     return time;
 }
 
+void Application::HandleKeyPress(const int Key, const int ScanCode, const int Action, const int Mods)
+{
+}
+
+void Application::HandleMouseButton(const int Button, const int Action, const int Mods)
+{
+}
+
+void Application::HandleMouseCursorPosition(const double X, const double Y)
+{
+}
+
+void Application::HandleMouseScroll(const double XOffset, const double YOffset)
+{
+}
+
 void Application::Run(const std::string Title, const int Width, const int Height)
 {
     /*** GLFW (Graphics Library Framework) ***/
@@ -61,7 +95,12 @@ void Application::Run(const std::string Title, const int Width, const int Height
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
+    (void)glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
     (void)glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+    (void)glfwSetKeyCallback(window, KeyPressCallback);
+    (void)glfwSetMouseButtonCallback(window, MouseButtonCallback);
+    (void)glfwSetScrollCallback(window, MouseScrollCallback);
+    glfwSetWindowUserPointer(window, this);
 
     /*** GLAD (Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator) ***/
     /* Load OpenGL Functions */
@@ -83,9 +122,6 @@ void Application::Run(const std::string Title, const int Width, const int Height
         /* Time */
         elapsedTime = time - glfwGetTime();
         time = glfwGetTime();
-
-        /* Input */
-        ProcessInput(window);
 
         /* Update */
         Update();

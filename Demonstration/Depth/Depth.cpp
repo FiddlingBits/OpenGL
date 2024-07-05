@@ -11,11 +11,72 @@
 
 /*** Constructor ***/
 Depth::Depth()
-    : Application(), ebo {}, shaderProgram {}, texture {}, vao {}, vbo {}
+    : Application(),
+      camera {},
+      backward {false}, down {false}, forward {false}, left {false}, right {false}, up {false},
+      ebo {}, shaderProgram {}, texture {}, vao {}, vbo {}
 {
 }
 
 /*** Method ***/
+void Depth::HandleKeyPress(const int Key, const int ScanCode, const int Action, const int Mods)
+{
+    switch(Key)
+    {
+        case GLFW_KEY_A:
+            if(Action == GLFW_PRESS)
+                left = true;
+            else if(Action == GLFW_RELEASE)
+                left = false;
+            break;
+        case GLFW_KEY_D:
+            if(Action == GLFW_PRESS)
+                right = true;
+            else if(Action == GLFW_RELEASE)
+                right = false;
+            break;
+        case GLFW_KEY_DOWN:
+            if(Action == GLFW_PRESS)
+                down = true;
+            else if(Action == GLFW_RELEASE)
+                down = false;
+            break;
+        case GLFW_KEY_S:
+            if(Action == GLFW_PRESS)
+                backward = true;
+            else if(Action == GLFW_RELEASE)
+                backward = false;
+            break;
+        case GLFW_KEY_UP:
+            if(Action == GLFW_PRESS)
+                up = true;
+            else if(Action == GLFW_RELEASE)
+                up = false;
+            break;
+        case GLFW_KEY_W:
+            if(Action == GLFW_PRESS)
+                forward = true;
+            else if(Action == GLFW_RELEASE)
+                forward = false;
+            break;
+    }        
+}
+
+void Depth::HandleMouseCursorPosition(const double X, const double Y)
+{
+    static double lastX {X}, lastY {Y};
+    double xOffset = X - lastX;
+    double yOffset = lastY - Y;
+    lastX = X;
+    lastY = Y;
+    camera.Look(xOffset, yOffset);
+}
+
+void Depth::HandleMouseScroll(const double XOffset, const double YOffset)
+{
+    camera.Zoom(YOffset);
+}
+
 void Depth::SetUp(void)
 {
     /*** OpenGL ***/
@@ -183,19 +244,32 @@ void Depth::Update(void)
 
     /* Model */
     glm::mat4 model = glm::mat4(1.0);
+    model = glm::translate(model, glm::vec3(0.0, 0.0, -5.0));
     model = glm::rotate(model, static_cast<float>(GetTime()), glm::vec3(0.5, 1.0, 0.0));
     shaderProgram.SetMat4("vu_model", model);
 
+    /* Camera Movement */
+    if(backward)
+        camera.Move(Camera::Movement::Backward, GetElapsedTime());
+    if(down)
+        camera.Move(Camera::Movement::Down, GetElapsedTime());
+    if(forward)
+        camera.Move(Camera::Movement::Forward, GetElapsedTime());
+    if(left)
+        camera.Move(Camera::Movement::Left, GetElapsedTime());
+    if(right)
+        camera.Move(Camera::Movement::Right, GetElapsedTime());
+    if(up)
+        camera.Move(Camera::Movement::Up, GetElapsedTime());
+
     /* View */
-    glm::mat4 view = glm::mat4(1.0);
-    view = glm::translate(view, glm::vec3(0.0, 0.0, -3.0));
-    shaderProgram.SetMat4("vu_view", view);
+    shaderProgram.SetMat4("vu_view", camera.GetView());
 
     /* Projection */
-    glm::mat4 projection = glm::mat4(1.0);
     int width, height;
     glfwGetWindowSize(window, &width, &height);
-    projection = glm::perspective(glm::radians(45.0), static_cast<double>(width) / static_cast<double>(height), 0.1, 100.0);
+    glm::mat4 projection = glm::mat4(1.0);
+    projection = glm::perspective(glm::radians(camera.GetZoom()), static_cast<double>(width) / static_cast<double>(height), 0.1, 100.0);
     shaderProgram.SetMat4("vu_projection", projection);
 
     /* Draw */

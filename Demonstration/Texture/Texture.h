@@ -14,6 +14,7 @@
 #include <format>
 #include "glad/glad.h" // Must Be Included Before glfw3.h
 #include "GLFW/glfw3.h"
+#include <iostream>
 
 /****************************************************************************************************
  * Class
