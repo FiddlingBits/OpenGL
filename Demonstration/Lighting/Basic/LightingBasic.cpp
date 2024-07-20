@@ -2,24 +2,23 @@
  * Include
  ****************************************************************************************************/
 
-#include "Demonstration/Depth/Depth.h"
-#include "Library/stb/stb_image.h" // Must Be Included Here
+#include "Demonstration/Lighting/Basic/LightingBasic.h"
 
 /****************************************************************************************************
  * Class
  ****************************************************************************************************/
 
 /*** Constructor ***/
-Depth::Depth()
+LightingBasic::LightingBasic()
     : Application(),
       camera {},
       backward {false}, down {false}, forward {false}, left {false}, right {false}, up {false},
-      ebo {}, shaderProgram {}, texture {}, vao {}, vbo {}
+      shaderProgram {}, vao {}, vbo {}
 {
 }
 
 /*** Method ***/
-void Depth::HandleKeyPress(const int Key, const int ScanCode, const int Action, const int Mods)
+void LightingBasic::HandleKeyPress(const int Key, const int ScanCode, const int Action, const int Mods)
 {
     switch(Key)
     {
@@ -62,7 +61,7 @@ void Depth::HandleKeyPress(const int Key, const int ScanCode, const int Action, 
     }        
 }
 
-void Depth::HandleMouseCursorPosition(const double X, const double Y)
+void LightingBasic::HandleMouseCursorPosition(const double X, const double Y)
 {
     static double lastX {X}, lastY {Y};
     double xOffset = X - lastX;
@@ -72,71 +71,74 @@ void Depth::HandleMouseCursorPosition(const double X, const double Y)
     camera.Look(xOffset, yOffset);
 }
 
-void Depth::HandleMouseScroll(const double XOffset, const double YOffset)
+void LightingBasic::HandleMouseScroll(const double XOffset, const double YOffset)
 {
     camera.Zoom(YOffset);
 }
 
-void Depth::SetUp(void)
+void LightingBasic::SetUp(void)
 {
     /*** OpenGL ***/
     glEnable(GL_DEPTH_TEST);
 
     /*** Shader Program ***/
-    shaderProgram.CreateProgram("Demonstration\\Depth\\FragmentShader.txt", "Demonstration\\Depth\\VertexShader.txt");
-    shaderProgram.Use();
+    /* Lighting */
+    shaderProgram[0].CreateProgram("Demonstration\\Lighting\\Basic\\LightingFragmentShader.txt", "Demonstration\\Lighting\\Basic\\LightingVertexShader.txt");
+    
+    /* Light Cube */
+    shaderProgram[1].CreateProgram("Demonstration\\Lighting\\Basic\\LightCubeFragmentShader.txt", "Demonstration\\Lighting\\Basic\\LightCubeVertexShader.txt");
 
     /*** Rectangle ***/
     /* Positions */
     float positions[] =
     {
-        /* Texture Coordinates: Side 1 */
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        1.0, 1.0,
-        0.0, 1.0,
-        0.0, 0.0,
+        /* Normal: Side 1 */
+        0.0, 0.0, -1.0,
+        0.0, 0.0, -1.0,
+        0.0, 0.0, -1.0,
+        0.0, 0.0, -1.0,
+        0.0, 0.0, -1.0,
+        0.0, 0.0, -1.0,
 
-        /* Texture Coordinates: Side 2 */
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        1.0, 1.0,
-        0.0, 1.0,
-        0.0, 0.0,
+        /* Normal: Side 2 */
+        0.0, 0.0, 1.0,
+        0.0, 0.0, 1.0,
+        0.0, 0.0, 1.0,
+        0.0, 0.0, 1.0,
+        0.0, 0.0, 1.0,
+        0.0, 0.0, 1.0,
 
-        /* Texture Coordinates: Side 3 */
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        1.0, 1.0,
-        0.0, 1.0,
-        0.0, 0.0,
+        /* Normal: Side 3 */
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
 
-        /* Texture Coordinates: Side 4 */
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        1.0, 1.0,
-        0.0, 1.0,
-        0.0, 0.0,
+        /* Normal: Side 4 */
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
 
-        /* Texture Coordinates: Side 5 */
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        1.0, 1.0,
-        0.0, 1.0,
-        0.0, 0.0,
+        /* Normal: Side 5 */
+        0.0, -1.0, 0.0,
+        0.0, -1.0, 0.0,
+        0.0, -1.0, 0.0,
+        0.0, -1.0, 0.0,
+        0.0, -1.0, 0.0,
+        0.0, -1.0, 0.0,
 
-        /* Texture Coordinates: Side 6 */
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        1.0, 1.0,
-        0.0, 1.0,
-        0.0, 0.0,
+        /* Normal: Side 6 */
+        0.0, 1.0, 0.0,
+        0.0, 1.0, 0.0,
+        0.0, 1.0, 0.0,
+        0.0, 1.0, 0.0,
+        0.0, 1.0, 0.0,
+        0.0, 1.0, 0.0,
 
         /* Vertex: Side 1 */
         -0.5, -0.5, -0.5,
@@ -187,66 +189,67 @@ void Depth::SetUp(void)
         -0.5, 0.5, -0.5
     };
 
-    /* Vertex Array Object */
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    /* Vertex Array Object (Lighting) */
+    glGenVertexArrays(1, &vao[0]);
+    glBindVertexArray(vao[0]);
 
-    /* Vertex Buffer Object */
+    /* Vertex Buffer Object (Shared) */
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-    GLint location {shaderProgram.GetAttributeLocation("vi_textureCoordinates")};
-    glVertexAttribPointer(location, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+    GLint location = shaderProgram[0].GetAttributeLocation("vi_normal");
+    glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(location);
-    location = shaderProgram.GetAttributeLocation("vi_position");
-    glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(72 * sizeof(float)));
+    location = shaderProgram[0].GetAttributeLocation("vi_position");
+    glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(108 * sizeof(float)));
     glEnableVertexAttribArray(location);
 
-    /* Texture */
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    int width, height, nrChannels;
-    stbi_uc* data {stbi_load("Demonstration\\Depth\\Texture.png", &width, &height, &nrChannels, STBI_rgb)};
-    if(data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << std::format("[ERROR] Load Texture File\n");
-    }
-    stbi_image_free(data);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    /* Vertex Array Object (Light Cube) */
+    glGenVertexArrays(1, &vao[1]);
+    glBindVertexArray(vao[1]);
+
+    /* Vertex Buffer Object (Shared; Set Above) */
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    location = shaderProgram[1].GetAttributeLocation("vi_position");
+    glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(108 * sizeof(float)));
+    glEnableVertexAttribArray(location);
 }
 
-void Depth::TearDown(void)
+void LightingBasic::TearDown(void)
 {
     /*** Clean Up ***/
-    glDeleteBuffers(1, &ebo);
-    glDeleteVertexArrays(1, &vao);
+    glDeleteVertexArrays(2, vao);
     glDeleteBuffers(1, &vbo);
 
     /*** Terminate ***/
     glfwTerminate();
 }
 
-void Depth::Update(void)
+void LightingBasic::Update(void)
 {
     /*** Update ***/
     /* Set Up */
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    /* Light */
+    glm::vec3 lightPosition(2.0, 2.0, -5.0);
+
+    /* Shader */
+    shaderProgram[0].Use();
+    
+    /* Color */
+    shaderProgram[0].SetVec3("fu_lightColor", 1.0, 1.0, 1.0); // White
+    shaderProgram[0].SetVec3("fu_lightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
+    shaderProgram[0].SetVec3("fu_objectColor", 212.0 / 255.0, 175.0 / 255.0, 55.0 / 255.0); // Gold
+    glm::vec3 position = camera.GetPosition();
+    shaderProgram[0].SetVec3("fu_viewPosition", position.x, position.y, position.z);
+
     /* Model */
     glm::mat4 model = glm::mat4(1.0);
     model = glm::translate(model, glm::vec3(0.0, 0.0, -5.0));
     model = glm::rotate(model, static_cast<float>(GetTime()), glm::vec3(0.5, 1.0, 0.0));
-    shaderProgram.SetMat4("vu_model", model);
+    shaderProgram[0].SetMat4("vu_model", model);
 
     /* Camera Movement */
     if(backward)
@@ -263,17 +266,37 @@ void Depth::Update(void)
         camera.Move(Camera::Movement::Up, GetElapsedTime());
 
     /* View */
-    shaderProgram.SetMat4("vu_view", camera.GetView());
+    glm::mat4 view {camera.GetView()};
+    shaderProgram[0].SetMat4("vu_view", view);
 
     /* Projection */
     int width, height;
     glfwGetWindowSize(window, &width, &height);
     glm::mat4 projection = glm::mat4(1.0);
     projection = glm::perspective(glm::radians(camera.GetZoom()), static_cast<double>(width) / static_cast<double>(height), 0.1, 100.0);
-    shaderProgram.SetMat4("vu_projection", projection);
+    shaderProgram[0].SetMat4("vu_projection", projection);
 
     /* Draw */
-    glBindVertexArray(vao);
+    glBindVertexArray(vao[0]);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+
+    /* Shader */
+    shaderProgram[1].Use();
+
+    /* Model */
+    model = glm::mat4(1.0);
+    model = glm::translate(model, lightPosition);
+    model = glm::scale(model, glm::vec3(0.2)); // Smaller
+    shaderProgram[1].SetMat4("vu_model", model);
+
+    /* View */
+    shaderProgram[1].SetMat4("vu_view", view);
+
+    /* Projection */
+    shaderProgram[1].SetMat4("vu_projection", projection);
+
+    /* Draw */
+    glBindVertexArray(vao[1]);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
  

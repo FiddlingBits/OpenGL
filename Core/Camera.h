@@ -63,6 +63,7 @@ class Camera
         /*** Method ***/
         void Look(const double X, const double Y);
         void Move(const Movement Type, const double ElapsedTime);
+        glm::vec3 GetPosition() const;
         glm::mat4 GetView();
         double GetZoom() const;
         void Zoom(double Amount);

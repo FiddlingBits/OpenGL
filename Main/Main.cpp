@@ -10,6 +10,7 @@
 
 #include "Demonstration/Basic/Basic.h"
 #include "Demonstration/Depth/Depth.h"
+#include "Demonstration/Lighting/Basic/LightingBasic.h"
 #include "Demonstration/Texture/Texture.h"
 #include "Demonstration/Transform/Transform.h"
 #include "Library/stb/stb_image.h" // Must Be Included Only Once With STB_IMAGE_IMPLEMENTATION Defined
@@ -26,22 +27,27 @@ int main(int argc, char* argv[])
     /*** Run ***/
     if((argc == 2) && (strcmp(argv[1], "basic") == 0))
     {
-        Basic basic;
+        Basic basic {};
         basic.Run("Basic", 512, 512);
     }
     else if((argc == 2) && (strcmp(argv[1], "depth") == 0))
     {
-        Depth depth;
+        Depth depth {};
         depth.Run("Depth", 512, 512);
+    }
+    else if((argc == 3) && (strcmp(argv[1], "lighting") == 0) && (strcmp(argv[2], "basic") == 0))
+    {
+        LightingBasic lightingBasic {};
+        lightingBasic.Run("Lighting (Basic)", 512, 512);
     }
     else if((argc == 2) && (strcmp(argv[1], "texture") == 0))
     {
-        Texture texture;
+        Texture texture {};
         texture.Run("Texture", 512, 512);
     }
     else if((argc == 2) && (strcmp(argv[1], "transform") == 0))
     {
-        Transform transform;
+        Transform transform {};
         transform.Run("Transform", 512, 512);
     }
     else
@@ -49,6 +55,8 @@ int main(int argc, char* argv[])
         std::cout << std::format("usage: {} [OPTION]\n", argv[0]);
         std::cout << std::format("  basic\n");
         std::cout << std::format("  depth\n");
+        std::cout << std::format("  lighting\n");
+        std::cout << std::format("    basic\n");
         std::cout << std::format("  texture\n");
         std::cout << std::format("  transform\n");
     }

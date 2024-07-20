@@ -1,0 +1,33 @@
+#version 460 core
+
+in vec3 vo_fragmentPosition;
+in vec3 vo_normal;
+out vec4 FragColor;
+uniform vec3 fu_lightColor;
+uniform vec3 fu_lightPosition;
+uniform vec3 fu_objectColor;
+uniform vec3 fu_viewPosition;
+
+void main()
+{
+    // Ambient
+    const float AmbientStrength = 0.1;
+    vec3 ambient = AmbientStrength * fu_lightColor;
+  	
+    // Diffuse 
+    vec3 normal = normalize(vo_normal);
+    vec3 lightDirection = normalize(fu_lightPosition - vo_fragmentPosition);
+    float diffuseStrength = max(dot(normal, lightDirection), 0.0);
+    vec3 diffuse = diffuseStrength * fu_lightColor;
+    
+    // Specular
+    const float SpecularStrength = 0.5;
+    vec3 viewDirection = normalize(fu_viewPosition - vo_fragmentPosition);
+    vec3 reflectDirection = reflect(-lightDirection, normal);  
+    float shininess = pow(max(dot(viewDirection, reflectDirection), 0.0), 32);
+    vec3 specular = SpecularStrength * shininess * fu_lightColor;  
+    
+    // Result
+    vec3 result = (ambient + diffuse + specular) * fu_objectColor;
+    FragColor = vec4(result, 1.0);
+}

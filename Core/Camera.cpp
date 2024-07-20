@@ -64,6 +64,11 @@ void Camera::Move(const Movement Type, const double ElapsedTime)
     }
 }
 
+glm::vec3 Camera::GetPosition() const
+{
+    return position;
+}
+
 glm::mat4 Camera::GetView()
 {
     Update();

@@ -66,6 +66,7 @@
     <ClCompile Include="Demonstration\Basic\Basic.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Demonstration\Depth\Depth.cpp" />
+    <ClCompile Include="Demonstration\Lighting\Basic\LightingBasic.cpp" />
     <ClCompile Include="Demonstration\Texture\Texture.cpp" />
     <ClCompile Include="Demonstration\Transform\Transform.cpp" />
     <ClCompile Include="Library\glad\src\glad.c" />
@@ -77,6 +78,10 @@
     <Text Include="Demonstration\Basic\VertexShader.txt" />
     <Text Include="Demonstration\Depth\FragmentShader.txt" />
     <Text Include="Demonstration\Depth\VertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightCubeFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightCubeVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightingFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightingVertexShader.txt" />
     <Text Include="Demonstration\Texture\FragmentShader.txt" />
     <Text Include="Demonstration\Texture\VertexShader.txt" />
     <Text Include="Demonstration\Transform\FragmentShader.txt" />
@@ -88,6 +93,7 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Demonstration\Depth\Depth.h" />
+    <ClInclude Include="Demonstration\Lighting\Basic\LightingBasic.h" />
     <ClInclude Include="Demonstration\Texture\Texture.h" />
     <ClInclude Include="Demonstration\Transform\Transform.h" />
   </ItemGroup>
