@@ -41,6 +41,7 @@ class ShaderProgram
         /*** Method ***/
         void CreateProgram(const std::string FragmentShaderFileName, const std::string VertexShaderFileName);
         GLint GetAttributeLocation(const std::string Name) const;
+        void SetFloat(const std::string& Name, const float Value) const;
         void SetMat4(const std::string& Name, const glm::mat4& Mat4) const;
         void SetVec3(const std::string& name, const float X, const float Y, const float Z) const;
         void Use() const;

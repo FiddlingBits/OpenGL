@@ -1,0 +1,16 @@
+#version 460 core
+
+in vec3 vi_normal;
+in vec3 vi_position;
+out vec3 vo_fragmentPosition;
+out vec3 vo_normal;
+uniform mat4 vu_model;
+uniform mat4 vu_projection;
+uniform mat4 vu_view;
+
+void main()
+{
+    vo_fragmentPosition = vec3(vu_model * vec4(vi_position, 1.0));
+	vo_normal = mat3(transpose(inverse(vu_model))) * vi_normal;
+	gl_Position = vu_projection * vu_view * vec4(vo_fragmentPosition, 1.0);
+}
