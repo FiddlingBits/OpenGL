@@ -1,0 +1,11 @@
+#version 460 core
+
+in vec3 vi_position;
+uniform mat4 vu_model;
+uniform mat4 vu_projection;
+uniform mat4 vu_view;
+
+void main()
+{
+	gl_Position = vu_projection * vu_view * vu_model * vec4(vi_position, 1.0);
+}

@@ -42,6 +42,15 @@
     <ClCompile Include="Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Demonstration\Lighting\Basic\LightingBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Demonstration\Lighting\Material\LightingMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Demonstration\Lighting\Map\LightingMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Demonstration\Basic\VertexShader.txt" />
@@ -52,6 +61,19 @@
     <Text Include="Demonstration\Transform\VertexShader.txt" />
     <Text Include="Demonstration\Depth\VertexShader.txt" />
     <Text Include="Demonstration\Depth\FragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightCubeFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightCubeVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightingFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Basic\LightingVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Material\LightCubeFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Material\LightCubeVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Material\LightingFragmentShader.txt" />
+    <Text Include="Demonstration\Texture\LightingVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Material\LightingVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Map\LightCubeFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Map\LightCubeVertexShader.txt" />
+    <Text Include="Demonstration\Lighting\Map\LightingFragmentShader.txt" />
+    <Text Include="Demonstration\Lighting\Map\LightingVertexShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ShaderProgram.h">
@@ -73,6 +95,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Demonstration\Lighting\Basic\LightingBasic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Demonstration\Lighting\Material\LightingMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Demonstration\Lighting\Map\LightingMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
